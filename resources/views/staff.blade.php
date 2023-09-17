@@ -85,7 +85,8 @@
 <div class="modal fade" id="modal_add_data" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="form" action="#" id="modal_add_data_form">
+            <form class="form" id="modal_add_data_form">
+
                 <div class="modal-header" id="modal_add_data_header">
                     <h2 class="fw-bolder">Tambah Staff</h2>
                     <div id="modal_add_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
@@ -105,6 +106,14 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="" id="txtNameInsert" autocomplete="off" />
                             </div>
                             <div class="fv-row mb-7">
+                                <label class="required fs-6 fw-bold mb-2">Email</label>
+                                <input type="email" class="form-control form-control-solid" placeholder="" id="txtEmailInsert" autocomplete="off" />
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="required fs-6 fw-bold mb-2">Password</label>
+                                <input type="password" class="form-control form-control-solid" placeholder="" id="txtPasswordInsert" autocomplete="off" />
+                            </div>
+                            <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Tempat Lahir</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="" id="txtPLaceBirthdInsert" autocomplete="off" />
                             </div>
@@ -115,10 +124,12 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Jenis Kelamin</label>
                                 <select class="form-select form-select-solid select-type" id="cbGenderInsert" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="1">Laki - laki</option>
-                                    <option value="0">Perempuan</option>
+                                    <option value="0">Laki - laki</option>
+                                    <option value="1">Perempuan</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-6">
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Jabatan</label>
                                 <select class="form-select form-select-solid select-type" id="cbPositionInsert" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
@@ -126,8 +137,6 @@
                                     <option value="Staff">Staff</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-6">
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Status</label>
                                 <select class="form-select form-select-solid select-type" id="cbStatusInsert" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
@@ -160,7 +169,7 @@
                 </div>
                 <div class="modal-footer flex-center">
                     <button type="reset" id="modal_add_data_cancel" class="btn btn-light me-3">Batal</button>
-                    <button type="submit" id="modal_add_data_submit" class="btn btn-primary">
+                    <button type="button" id="modal_add_data_submit" class="btn btn-primary">
                         <span class="indicator-label">Simpan</span>
                         <span class="indicator-progress">Loading...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -194,6 +203,10 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="" id="txtNameUpdate" autocomplete="off" />
                             </div>
                             <div class="fv-row mb-7">
+                                <label class="required fs-6 fw-bold mb-2">Email</label>
+                                <input type="email" class="form-control form-control-solid" placeholder="" id="txtEmailUpdate" autocomplete="off" />
+                            </div>
+                            <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Tempat Lahir</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="" id="txtPLaceBirthdUpdate" autocomplete="off" />
                             </div>
@@ -204,8 +217,8 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Jenis Kelamin</label>
                                 <select class="form-select form-select-solid select-type" id="cbGenderUpdate" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="L">Laki - laki</option>
-                                    <option value="P">Perempuan</option>
+                                    <option value="0">Laki - laki</option>
+                                    <option value="1">Perempuan</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-7">
@@ -249,7 +262,7 @@
                 </div>
                 <div class="modal-footer flex-center">
                     <button type="reset" id="modal_update_data_cancel" class="btn btn-light me-3">Batal</button>
-                    <button type="submit" id="modal_update_data_submit" class="btn btn-primary">
+                    <button type="button" id="modal_update_data_submit" class="btn btn-primary">
                         <span class="indicator-label">Simpan</span>
                         <span class="indicator-progress">Loading...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -268,34 +281,156 @@
 <script>
     "use strict";
 
-    var resultData = [{
-            code: "1",
-            name: "Muhammad Teguh",
-            place_birth: "Gresik",
-            date_birth: "2000-01-30",
-            gender: "L",
-            position: "Supervisor",
-            status: "1",
-            basic_salary: "7000000",
-            subsidy: "3000000",
-            bpjs: "1",
-            date_join: "2020-03-03",
-        },
-        {
-            code: "2",
-            name: "Shindi Purnama",
-            place_birth: "Surabaya",
-            date_birth: "2000-03-03",
-            gender: "P",
-            position: "Staff",
-            status: "2",
-            basic_salary: "5000000",
-            subsidy: "1000000",
-            bpjs: "0",
-            date_join: "2021-09-05",
-        },
-    ]
-    var table
+    // var resultData = [{
+    //         code: "1",
+    //         name: "Muhammad Teguh",
+    //         place_birth: "Gresik",
+    //         date_birth: "2000-01-30",
+    //         gender: "L",
+    //         position: "Supervisor",
+    //         status: "1",
+    //         basic_salary: "7000000",
+    //         subsidy: "3000000",
+    //         bpjs: "1",
+    //         date_join: "2020-03-03",
+    //     },
+    //     {
+    //         code: "2",
+    //         name: "Shindi Purnama",
+    //         place_birth: "Surabaya",
+    //         date_birth: "2000-03-03",
+    //         gender: "P",
+    //         position: "Staff",
+    //         status: "2",
+    //         basic_salary: "5000000",
+    //         subsidy: "1000000",
+    //         bpjs: "0",
+    //         date_join: "2021-09-05",
+    //     },
+    // ]
+    var resultData = []
+    var table, code
+    var csrfToken = $('meta[name="csrf-token"]').attr('content')
+
+    // INSERT
+    $("#modal_add_data_submit").click(function() {
+        var name = $("#txtNameInsert").val()
+        var email = $("#txtEmailInsert").val()
+        var password = $("#txtPasswordInsert").val()
+        var place_birthd = $("#txtPLaceBirthdInsert").val()
+        var date_birthd = $("#txtDateBirthdInsert").val()
+        var gender = $("#cbGenderInsert").val()
+        var position = $("#cbPositionInsert").val()
+        var status = $("#cbStatusInsert").val()
+        var basic_salary = $("#txtBasicSalaryInsert").val().split('.').join('')
+        var subsidi = $("#txtSubsidyInsert").val().split('.').join('')
+        var bpjs = $("#cbBpjsInsert").val()
+        var date_join = $("#txtDateJoinInsert").val()
+
+        Swal.fire({
+            title: 'Proses!',
+            html: "Tambah data",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+        })
+
+        $.ajax({
+            url: "/staff/insert",
+            method: 'GET',
+            data: {
+                name: name,
+                email: email,
+                password: password,
+                place_birthd: place_birthd,
+                date_birthd: date_birthd,
+                gender: gender,
+                position: position,
+                status: status,
+                basic_salary: basic_salary,
+                subsidi: subsidi,
+                bpjs: bpjs,
+                date_join: date_join
+            },
+            success: function(result) {
+                var result = result;
+                console.log(result)
+
+                Swal.fire({
+                    title: "Sukses",
+                    html: "Berhasil tambah data",
+                    icon: "success",
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                }).then(getData());
+
+                $("input").val("")
+                $("#modal_add_data").modal("hide")
+            }
+        });
+    })
+
+
+    // UPDATE
+    $("#modal_update_data_submit").click(function() {
+        var name = $("#txtNameUpdate").val()
+        var email = $("#txtEmailUpdate").val()
+        var place_birthd = $("#txtPLaceBirthdUpdate").val()
+        var date_birthd = $("#txtDateBirthdUpdate").val()
+        var gender = $("#cbGenderUpdate").val()
+        var position = $("#cbPositionUpdate").val()
+        var status = $("#cbStatusUpdate").val()
+        var basic_salary = $("#txtBasicSalaryUpdate").val().split('.').join('')
+        var subsidi = $("#txtSubsidyUpdate").val().split('.').join('')
+        var bpjs = $("#cbBpjsUpdate").val()
+        var date_join = $("#txtDateJoinUpdate").val()
+
+        Swal.fire({
+            title: 'Proses!',
+            html: "Ubah data",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+        })
+
+        $.ajax({
+            url: "/staff/update/" + code,
+            method: 'GET',
+            data: {
+                name: name,
+                email: email,
+                place_birthd: place_birthd,
+                date_birthd: date_birthd,
+                gender: gender,
+                position: position,
+                status: status,
+                basic_salary: basic_salary,
+                subsidi: subsidi,
+                bpjs: bpjs,
+                date_join: date_join
+            },
+            success: function(result) {
+                var result = result;
+                console.log(result)
+
+                Swal.fire({
+                    title: "Sukses",
+                    html: "Berhasil ubah data",
+                    icon: "success",
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                }).then(getData());
+
+                $("input").val("")
+                $("#modal_update_data").modal("hide")
+            }
+        });
+    })
+
 
     $("#txtBasicSalaryInsert, #txtSubsidyInsert, #txtBasicSalaryUpdate, #txtSubsidyUpdate").keyup(function() {
         var value = $(this).val();
@@ -324,12 +459,11 @@
             url: "/staff/get",
             method: 'GET',
             success: function(result) {
-                console.log(JSON.parse(result));
-                var result = JSON.parse(result);
+                var result = result;
 
-                if (result.success) {
+                if (result) {
                     resultData = [];
-                    resultData = result.data;
+                    resultData = result;
                     showDataTable()
                 }
             }
@@ -337,7 +471,6 @@
     }
 
     function showDataTable() {
-        console.log(resultData)
         table = $("#kt_dataTable").DataTable({
             "searchDelay": 500,
             "processing": true,
@@ -365,7 +498,7 @@
                     data: 'basic_salary'
                 },
                 {
-                    data: 'subsidy'
+                    data: 'subsidi'
                 },
                 {
                     data: 'bpjs'
@@ -381,6 +514,13 @@
                     targets: 1,
                     render: function(data, type, row) {
                         return `<span>${data}, ${moment(row.date_birth).format('DD MMM YYYY')}</span>`
+                    }
+                },
+                {
+                    targets: 2,
+                    render: function(data, type, row) {
+                        if (data == 0) return 'L'
+                        else return 'P'
                     }
                 },
                 {
@@ -434,7 +574,7 @@
                                 </a>
                             </div>
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link" data-kt-forms-table-filter="delete_row" data-code="${row.code}" >
+                                <a href="#" class="menu-link" data-kt-forms-table-filter="delete_row" data-code="${row.id}" >
                                     <span class="fas fa-trash fs-3 menu-icon"></span>
                                     <span class="menu-title">Hapus</span>
                                 </a>
@@ -504,37 +644,19 @@
                         })
 
                         $.ajax({
-                            data: {
-                                code: code,
-                                phone: dataLocal.phone
-                            },
-                            url: baseUrl + "forms/delete",
-                            method: 'POST',
+                            url: "staff/delete/" + code,
+                            method: 'GET',
                             success: function(result) {
-                                console.log(JSON.parse(result));
-                                var result = JSON.parse(result);
 
-                                if (result.success) {
-                                    Swal.fire({
-                                        title: "Sukses",
-                                        html: "Anda telah menghapus <span class='text-success'>" + ListName + "</span>!",
-                                        icon: "success",
-                                        timer: 2000,
-                                        showCancelButton: false,
-                                        showConfirmButton: false
-                                    }).then(ajax_get());
-                                } else {
-                                    Swal.fire({
-                                        title: "Maaf",
-                                        text: "Sepertinya ada beberapa kesalahan yang terdeteksi. Silakan coba lagi.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok!",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        },
-                                    });
-                                }
+                                Swal.fire({
+                                    title: "Sukses",
+                                    html: "Berhasil hapus data",
+                                    icon: "success",
+                                    timer: 2000,
+                                    showCancelButton: false,
+                                    showConfirmButton: false
+                                }).then(getData());
+
                             }
                         });
                     }
@@ -553,15 +675,17 @@
         $(document).on("click", "#optionEdit", function(e) {
             e.preventDefault()
             var row = JSON.parse(atob($(this).data('row')));
-            console.log(row)
+            code = row.id
+
             $("#txtNameUpdate").val(row.name)
+            $("#txtEmailUpdate").val(row.email)
             $("#txtPLaceBirthdUpdate").val(row.place_birth)
             $("#txtDateBirthdUpdate").val(row.date_birth)
             $("#cbGenderUpdate").val(row.gender).change()
             $("#cbPositionUpdate").val(row.position).change()
             $("#cbStatusUpdate").val(row.status).change()
             $("#txtBasicSalaryUpdate").val(number_format(parseInt(row.basic_salary), 0, ',', '.'))
-            $("#txtSubsidyUpdate").val(number_format(parseInt(row.subsidy), 0, ',', '.'))
+            $("#txtSubsidyUpdate").val(number_format(parseInt(row.subsidi), 0, ',', '.'))
             $("#cbBpjsUpdate").val(row.bpjs).change()
             $("#txtDateJoinUpdate").val(row.date_join)
             $("#modal_update_data").modal("show")

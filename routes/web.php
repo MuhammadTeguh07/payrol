@@ -29,12 +29,19 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
-    
+
     Route::get('/staff', [StaffController::class, 'index']);
     Route::get('/staff/get', [StaffController::class, 'get']);
+    Route::get('/staff/insert', [StaffController::class, 'insert']);
+    Route::get('/staff/update/{id}', [StaffController::class, 'update']);
+    Route::get('/staff/delete/{id}', [StaffController::class, 'delete']);
+    
+    Route::get('/permission', [PermissionController::class, 'index']);
+    Route::post('/permission/insert', [PermissionController::class, 'insert'])->name('permission-insert');
+    Route::put('/permission/update/{id}', [PermissionController::class, 'update'])->name('permission-update');
 
     Route::get('/absence', [AbsenceController::class, 'index']);
-    Route::get('/permission', [PermissionController::class, 'index']);
     Route::get('/overtime', [OvertimeController::class, 'index']);
     Route::get('/payroll', [PayrollController::class, 'index']);
+    Route::get('/payroll/create', [PayrollController::class, 'create']);
 });

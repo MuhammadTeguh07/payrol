@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Izin;
+use App\Models\User;
 
 class PermissionController extends Controller
 {
@@ -13,7 +15,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('permission');
+        $data = Izin::all(); // Mengambil semua data pengguna (users)
+        $user = User::all(); // Mengambil semua data pengguna (users)
+        return view('permission', compact('data', 'user'));
     }
 
     /**
@@ -32,9 +36,10 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function insert(Request $request)
     {
-        //
+        Izin::create($request->all());
+        return back();
     }
 
     /**
@@ -68,7 +73,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //>
+        Izin::find($id)->update($request->all());
+        return back();
     }
 
     /**
