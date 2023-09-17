@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission', [PermissionController::class, 'index']);
     Route::post('/permission/insert', [PermissionController::class, 'insert'])->name('permission-insert');
     Route::put('/permission/update/{id}', [PermissionController::class, 'update'])->name('permission-update');
+    Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission-destroy');
 
     Route::get('/absence', [AbsenceController::class, 'index']);
     Route::get('/overtime', [OvertimeController::class, 'index']);

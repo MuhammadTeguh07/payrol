@@ -86,6 +86,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Izin::find($id)->delete();
+        return back();
     }
 }
