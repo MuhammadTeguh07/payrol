@@ -23,6 +23,7 @@ class Penggajian extends Model
         'tunjangan',
         'bpjs',
         'intensif',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',

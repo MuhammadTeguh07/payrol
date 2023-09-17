@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/absence', [AbsenceController::class, 'index']);
     Route::get('/overtime', [OvertimeController::class, 'index']);
+
     Route::get('/payroll', [PayrollController::class, 'index']);
-    Route::get('/payroll/create', [PayrollController::class, 'create']);
+    Route::get('/payroll/generate', [PayrollController::class, 'create']);
+    Route::get('/payroll/save', [PayrollController::class, 'store']);
 });

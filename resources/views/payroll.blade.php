@@ -72,6 +72,13 @@
                     </table>
                 </div>
             </div>
+            <div class="row d-none mt-3" id="divBtnSave">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary skeleton skeleton-button" id="btnSave" style="width: 100%;">
+                        Simpan
+                    </button>
+                </div>
+            </div>
         </div>
         <!--end::Container-->
     </div>
@@ -99,14 +106,10 @@
                         <label class="required fs-6 fw-bold mb-2">Pilih Periode</label>
                         <input type="month" name="month" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtDateInsert" autocomplete="off" />
                     </div>
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Jumlah Hari Libur</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="" id="txtDayOffInsert" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
-                    </div>
                 </div>
                 <div class="modal-footer flex-center">
                     <button type="reset" id="modal_generate_data_cancel" class="btn btn-light me-3">Batal</button>
-                    <button type="submit" id="modal_generate_data_submit" class="btn btn-primary">
+                    <button type="button" id="modal_generate_data_submit" class="btn btn-primary">
                         <span class="indicator-label">Generate</span>
                         <span class="indicator-progress">Loading...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -185,60 +188,73 @@
 <script>
     "use strict";
 
-    var resultData = [{
-            code: "1",
-            name: "Muhammad Teguh",
-            month: "Agustus 2023",
-            position: "Supervisor",
-            status: "Tetap",
-            basic_salary: "5000000",
-            total_salary: "7000000",
-            qty_permission: "1",
-            total_permission: "100000",
-            total_overtime: "0",
-            overtime: "100000",
-            subsidy: "500000",
-            bpjs: "150000",
-            intensif: "100000"
-        },
-        {
-            code: "2",
-            name: "Shindi Purnama",
-            month: "Agustus 2023",
-            position: "Staff",
-            status: "Kontrak",
-            basic_salary: "4000000",
-            total_salary: "5000000",
-            qty_permission: "1",
-            total_permission: "100000",
-            total_overtime: "0",
-            overtime: "100000",
-            subsidy: "500000",
-            bpjs: "150000",
-            intensif: "100000"
-        },
-    ]
+    // var resultData = [{
+    //         code: "1",
+    //         name: "Muhammad Teguh",
+    //         month: "Agustus 2023",
+    //         position: "Supervisor",
+    //         status: "Tetap",
+    //         basic_salary: "5000000",
+    //         total_salary: "7000000",
+    //         qty_permission: "1",
+    //         total_permission: "100000",
+    //         total_overtime: "0",
+    //         overtime: "100000",
+    //         subsidy: "500000",
+    //         bpjs: "150000",
+    //         intensif: "100000"
+    //     },
+    //     {
+    //         code: "2",
+    //         name: "Shindi Purnama",
+    //         month: "Agustus 2023",
+    //         position: "Staff",
+    //         status: "Kontrak",
+    //         basic_salary: "4000000",
+    //         total_salary: "5000000",
+    //         qty_permission: "1",
+    //         total_permission: "100000",
+    //         total_overtime: "0",
+    //         overtime: "100000",
+    //         subsidy: "500000",
+    //         bpjs: "150000",
+    //         intensif: "100000"
+    //     },
+    // ]
+    var resultData = []
     var table
 
-    function getData() {
+    $("#btnSave").click(function() {
         $.ajax({
             data: {
-                phone: dataLocal.phone,
+                payroll: JSON.stringify(resultData),
             },
-            url: baseUrl + "forms/get",
-            method: 'POST',
+            url: "payroll/save",
+            method: 'GET',
             success: function(result) {
-                console.log(JSON.parse(result));
-                var result = JSON.parse(result);
 
-                if (result.success) {
-                    resultData = [];
-                    resultData = result.data;
-                    showDataTable()
-                }
             }
         });
-    }
+    })
+
+    $("#modal_generate_data_submit").click(function() {
+        var month = $("#txtDateInsert").val()
+
+        $.ajax({
+            data: {
+                month: month,
+            },
+            url: "payroll/generate",
+            method: 'GET',
+            success: function(result) {
+                resultData = [];
+                resultData = result;
+                showDataTable()
+                $("#divBtnSave").removeClass("d-none")
+                $("#modal_generate_data").modal("hide")
+            }
+        });
+    })
 
     function showDataTable() {
         console.log(resultData)
@@ -251,28 +267,42 @@
             ],
             "data": resultData,
             "columns": [{
-                    data: 'name'
+                    data: 'user_name'
                 },
                 {
-                    data: 'month'
+                    data: 'date'
                 },
                 {
-                    data: 'position'
+                    data: 'user_position'
                 },
                 {
-                    data: 'status'
+                    data: 'user_status'
                 },
                 {
-                    data: 'total_salary'
+                    data: 'paid_amount'
                 },
                 {
-                    data: 'code'
+                    data: 'user_id'
                 },
             ],
             "columnDefs": [{
+                    targets: 1,
+                    render: function(data, type, row) {
+                        return `<span>${moment(data).format('MMM YYYY')}</span>`
+                    }
+                },
+                {
                     targets: 4,
                     render: function(data, type, row) {
                         return `<span>${number_format(parseInt(data), 0, ',', '.')}</span>`
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function(data, type, row) {
+                        if (data == 0) return `<span>Tetap</span>`
+                        else if (data == 1) return `<span>Kontrak</span>`
+                        else return `<span>HL</span>`
                     }
                 },
                 {
@@ -321,15 +351,16 @@
         $(document).on("click", "#optionDetail", function(e) {
             e.preventDefault()
             var row = JSON.parse(atob($(this).data('row')));
-            console.log(row)
-            $("#txtName").text(row.name)
-            $("#txtPeriod").text(row.month)
-            $("#txtPosition").text(row.position + " (" + row.status + ")")
-            $("#txtTotalSalary").text(number_format(parseInt(row.total_salary), 0, ',', '.'))
-            $("#txtSalary").text(number_format(parseInt(row.basic_salary), 0, ',', '.'))
-            $("#txtPermission").text("("+row.qty_permission+") "+number_format(parseInt(row.total_permission), 0, ',', '.'))
-            $("#txtOvertime").text(number_format(parseInt(row.total_overtime), 0, ',', '.'))
-            $("#txtSubsidy").text(number_format(parseInt(row.subsidy), 0, ',', '.'))
+            var status = row.user_status == 0 ? 'Tetap' : row.user_status == 1 ? 'Kontrak' : 'HL'
+            console.log(row.user_position)
+            $("#txtName").text(row.user_name)
+            $("#txtPeriod").text(moment(row.date).format("MMM YYYY"))
+            $("#txtPosition").text(row.user_position + " (" + status + ")")
+            $("#txtTotalSalary").text(number_format(parseInt(row.paid_amount), 0, ',', '.'))
+            $("#txtSalary").text(number_format(parseInt(row.gaji_pokok), 0, ',', '.'))
+            $("#txtPermission").text("(" + row.izin_duration + ") " + number_format(parseInt(row.izin_charge), 0, ',', '.'))
+            $("#txtOvertime").text(number_format(parseInt(row.overtime_paid), 0, ',', '.'))
+            $("#txtSubsidy").text(number_format(parseInt(row.tunjangan), 0, ',', '.'))
             $("#txtBpjs").text(number_format(parseInt(row.bpjs), 0, ',', '.'))
             $("#txtIntensif").text(number_format(parseInt(row.intensif), 0, ',', '.'))
             $("#modal_detail").modal("show")

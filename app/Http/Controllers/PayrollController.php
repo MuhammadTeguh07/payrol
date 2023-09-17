@@ -7,6 +7,7 @@ use Laravel\Ui\Presets\React;
 use App\Models\User;
 use App\Models\Lembur;
 use App\Models\Izin;
+use App\Models\Penggajian;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 
@@ -52,7 +53,10 @@ class PayrollController extends Controller
 
             $penggajian[] = array(
                 'user_id' => $user->id,
-                'date' => date("Y-m-d"),
+                'user_name' => $user->name,
+                'user_position' => $user->position,
+                'user_status' => $user->status,
+                'date' => $dateString,
                 'paid_amount' => $paid_amount,
                 'izin_duration' => $total_izin,
                 'izin_charge' => $nwnp_cost,
@@ -170,7 +174,27 @@ class PayrollController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = json_decode($request->payroll);
+        foreach ($data as $d) {
+            $penggajian = new Penggajian;
+            $penggajian->user_id = $d->user_id;
+            $penggajian->date = $d->date;
+            $penggajian->paid_amount = $d->paid_amount;
+            $penggajian->work_paid = $d->gaji_pokok;
+            $penggajian->izin_duration = $d->izin_duration;
+            $penggajian->izin_charge = $d->izin_charge;
+            $penggajian->overtime_duration = $d->overtime_duration;
+            $penggajian->overtime_paid = $d->overtime_paid;
+            $penggajian->tunjangan = $d->tunjangan;
+            $penggajian->bpjs = $d->bpjs;
+            $penggajian->intensif = $d->intensif;
+            $penggajian->status = 0;
+            $penggajian->save();
+            // dd($penggajian);
+        }
+        // dd($data);
+        return response()->json("Sukses");
+
     }
 
     /**

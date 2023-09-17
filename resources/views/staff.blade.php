@@ -140,9 +140,9 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Status</label>
                                 <select class="form-select form-select-solid select-type" id="cbStatusInsert" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="1">Tetap</option>
-                                    <option value="2">Kontrak</option>
-                                    <option value="0">HL</option>
+                                    <option value="0">Tetap</option>
+                                    <option value="1">Kontrak</option>
+                                    <option value="2">HL</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-7">
@@ -233,9 +233,9 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Status</label>
                                 <select class="form-select form-select-solid select-type" id="cbStatusUpdate" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="1">Tetap</option>
-                                    <option value="2">Kontrak</option>
-                                    <option value="0">HL</option>
+                                    <option value="0">Tetap</option>
+                                    <option value="1">Kontrak</option>
+                                    <option value="2">HL</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-7">
@@ -551,8 +551,8 @@
                 {
                     targets: 4,
                     render: function(data, type, row) {
-                        if (data == 1) return `<span>Tetap</span>`
-                        else if (data == 2) return `<span>Kontrak</span>`
+                        if (data == 0) return `<span>Tetap</span>`
+                        else if (data == 1) return `<span>Kontrak</span>`
                         else return `<span>HL</span>`
                     }
                 },
