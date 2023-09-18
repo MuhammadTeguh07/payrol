@@ -133,8 +133,8 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Jabatan</label>
                                 <select class="form-select form-select-solid select-type" id="cbPositionInsert" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="Supervisor">Supervisor</option>
-                                    <option value="Staff">Staff</option>
+                                    <option value="Supervisor Payroll">Supervisor Payroll</option>
+                                    <option value="Staff Payroll">Staff Payroll</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-7">
@@ -224,8 +224,8 @@
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Jabatan</label>
                                 <select class="form-select form-select-solid select-type" id="cbPositionUpdate" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
-                                    <option value="Supervisor">Supervisor</option>
-                                    <option value="Staff">Staff</option>
+                                    <option value="Supervisor Payroll">Supervisor Payroll</option>
+                                    <option value="Staff Payroll">Staff Payroll</option>
                                 </select>
                             </div>
                         </div>

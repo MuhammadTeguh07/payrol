@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Lembur;
+use App\Models\User;
 
 class OvertimeController extends Controller
 {
@@ -11,9 +13,12 @@ class OvertimeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        return view('overtime');
+        $data = Lembur::all();
+        $user = User::all();
+        return view('overtime', compact('data', 'user'));
     }
 
     /**
@@ -32,9 +37,10 @@ class OvertimeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function insert(Request $request)
     {
-        //
+        Lembur::create($request->all());
+        return back();
     }
 
     /**
@@ -68,7 +74,8 @@ class OvertimeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Lembur::find($id)->update($request->all());
+        return back();
     }
 
     /**
@@ -79,6 +86,7 @@ class OvertimeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Lembur::find($id)->delete();
+        return back();
     }
 }

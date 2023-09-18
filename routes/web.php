@@ -42,9 +42,16 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission-destroy');
 
     Route::get('/absence', [AbsenceController::class, 'index']);
+
     Route::get('/overtime', [OvertimeController::class, 'index']);
+    Route::post('/overtime/insert', [OvertimeController::class, 'insert'])->name('overtime-insert');
+    Route::put('/overtime/update/{id}', [OvertimeController::class, 'update'])->name('overtime-update');
+    Route::delete('/overtime/destroy/{id}', [OvertimeController::class, 'destroy'])->name('overtime-destroy');
 
     Route::get('/payroll', [PayrollController::class, 'index']);
     Route::get('/payroll/generate', [PayrollController::class, 'create']);
     Route::get('/payroll/save', [PayrollController::class, 'store']);
+    Route::put('/payroll/approve/{id}', [PayrollController::class, 'approve'])->name('payroll-approve');
+    
+    Route::get('/data-payroll', [PayrollController::class, 'data_payroll']);
 });

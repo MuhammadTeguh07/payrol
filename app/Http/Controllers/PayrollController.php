@@ -18,9 +18,22 @@ class PayrollController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         return view('payroll');
+    }
+
+    public function data_payroll()
+    {
+        $penggajian = Penggajian::all(); // Mengambil semua data pengguna (penggajian)
+        $user = User::all(); // Mengambil semua data pengguna (user)
+        return view('data-payroll', compact('penggajian', 'user'));
+    }
+
+    public function approve($id) {
+        Penggajian::find($id)->update(['status' => 1]);
+        return back();
     }
 
     /**

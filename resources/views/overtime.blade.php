@@ -68,6 +68,100 @@
                             </tr>
                         </thead>
                         <tbody class="fw-bold text-gray-600">
+                            @foreach($data as $d)
+                            <tr>
+                                <td>{{$d->user->name}}</td>
+                                <td>{{$d->date}}</td>
+                                <td>{{$d->time_start}}</td>
+                                <td>{{$d->time_end}}</td>
+                                <td>{{$d->duration}} Jam</td>
+                                <td>{{$d->notes}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="btnAction">
+                                        <i class="bi bi-three-dots-vertical fs-3"></i>
+                                    </button>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                        <div class="menu-item px-3">
+                                            <a class="menu-link" data-bs-toggle="modal" data-bs-target="#modal_update_data_{{$d->id}}" id="optionEdit">
+                                                <span class="fas fa-pen fs-3 menu-icon"></span>
+                                                <span class="menu-title">Ubah</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item px-3">
+                                            <form method="POST" style="margin-bottom: 0px;" action="{{ route('overtime-destroy', $d->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="menu-link" style="border: none; background-color: white;" onclick="return confirm('Are you sure you want to delete this post?')">
+                                                    <span class="fas fa-trash fs-3 menu-icon"></span>
+                                                    <span class="menu-title">Hapus</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal_update_data_{{$d->id}}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form class="form" action="{{ route('overtime-update',$d->id) }}" method="POST" id="modal_update_data_form">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header" id="modal_update_data_header">
+                                                <h2 class="fw-bolder">Form Ubah Lembur</h2>
+                                                <div id="modal_update_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                                    <span class="svg-icon svg-icon-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body py-10 px-10">
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Nama Staff</label>
+                                                    <select class="form-select form-select-solid select-type" name="user_id" data-control="select2" data-hide-search="true" data-placeholder="Pilih user">
+                                                        @foreach($user as $u)
+                                                        <option value="{{ $u->id }}" {{ $u->id == $d->user_id ? 'selected' : '' }}>{{$u->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Tanggal</label>
+                                                    <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" name="date" value="{{$d->date}}" placeholder="" id="txtDateUpdate" autocomplete="off" />
+                                                </div>
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Jam Mulai</label>
+                                                    <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" name="time_start" value="{{$d->time_start}}" placeholder="" id="txtTimeStartUpdate" autocomplete="off" />
+                                                </div>
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Jam Selesai</label>
+                                                    <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" name="time_end" value="{{$d->time_end}}" placeholder="" id="txtTimeEndUpdate" autocomplete="off" />
+                                                </div>
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Durasi</label>
+                                                    <input type="text" class="form-control form-control-solid" name="duration" value="{{$d->duration}}" placeholder="" id="txtDurationUpdate" autocomplete="off" />
+                                                </div>
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fs-6 fw-bold mb-2">Keterangan</label>
+                                                    <input class="form-control form-control-solid" value="{{$d->notes}}" name="notes" placeholder="" id="txtNotesUpdate" autocomplete="off"></input>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer flex-center">
+                                                <button type="reset" id="modal_update_data_cancel" class="btn btn-light me-3">Batal</button>
+                                                <button type="submit" id="modal_update_data_submit" class="btn btn-primary">
+                                                    <span class="indicator-label">Simpan</span>
+                                                    <span class="indicator-progress">Loading...
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -82,7 +176,8 @@
 <div class="modal fade" id="modal_add_data" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form" action="#" id="modal_add_data_form">
+            <form class="form" action="{{ route('overtime-insert') }}" method="POST" id="modal_add_data_form">
+                @csrf
                 <div class="modal-header" id="modal_add_data_header">
                     <h2 class="fw-bolder">Form Tambah Lembur</h2>
                     <div id="modal_add_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
@@ -96,24 +191,32 @@
                 </div>
                 <div class="modal-body py-10 px-10">
                     <div class="fv-row mb-7">
+                        <label class="required fs-6 fw-bold mb-2">Nama Staff</label>
+                        <select class="form-select form-select-solid select-type" name="user_id" data-control="select2" data-hide-search="true" data-placeholder="Pilih Jenis Kelamin">
+                            @foreach($user as $user)
+                            <option value="{{ $user->id }}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Tanggal</label>
-                        <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtDateInsert" autocomplete="off" />
+                        <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" name="date" id="txtDateInsert" autocomplete="off" />
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Jam Mulai</label>
-                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtTimeStartInsert" autocomplete="off" />
+                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" name="time_start" id="txtTimeStartInsert" autocomplete="off" />
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Jam Selesai</label>
-                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtTimeEndInsert" autocomplete="off" />
+                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" name="time_end" id="txtTimeEndInsert" autocomplete="off" />
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Durasi</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="" id="txtDurationInsert" autocomplete="off" />
+                        <input type="text" class="form-control form-control-solid" placeholder="" name="duration" id="txtDurationInsert" autocomplete="off" />
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Keterangan</label>
-                        <textarea class="form-control form-control-solid" placeholder="" id="txtNotesInsert" autocomplete="off"></textarea>
+                        <textarea class="form-control form-control-solid" placeholder="" name="notes" id="txtNotesInsert" autocomplete="off"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer flex-center">
@@ -129,297 +232,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_update_data" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="form" action="#" id="modal_update_data_form">
-                <div class="modal-header" id="modal_update_data_header">
-                    <h2 class="fw-bolder">Form Tambah Lembur</h2>
-                    <div id="modal_update_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="modal-body py-10 px-10">
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Tanggal</label>
-                        <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtDateUpdate" autocomplete="off" />
-                    </div>
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Jam Mulai</label>
-                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtTimeStartUpdate" autocomplete="off" />
-                    </div>
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Jam Selesai</label>
-                        <input type="time" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" id="txtTimeEndUpdate" autocomplete="off" />
-                    </div>
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Durasi</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="" id="txtDurationUpdate" autocomplete="off" />
-                    </div>
-                    <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Keterangan</label>
-                        <textarea class="form-control form-control-solid" placeholder="" id="txtNotesUpdate" autocomplete="off"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer flex-center">
-                    <button type="reset" id="modal_update_data_cancel" class="btn btn-light me-3">Batal</button>
-                    <button type="submit" id="modal_update_data_submit" class="btn btn-primary">
-                        <span class="indicator-label">Simpan</span>
-                        <span class="indicator-progress">Loading...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="{{ asset('asset/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('asset/js/scripts.bundle.js') }}"></script>
 <script src="{{ asset('asset/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-
-<script>
-    "use strict";
-
-    var resultData = [{
-            code: "1",
-            name: "Muhammad Teguh",
-            date: "2023-08-30",
-            time_start: "17:00",
-            time_end: "19:00",
-            duration: "120",
-            notes: "Melanjutkan program payroll",
-        },
-        {
-            code: "2",
-            name: "Muhammad Teguh",
-            date: "2023-09-10",
-            time_start: "17:30",
-            time_end: "19:30",
-            duration: "120",
-            notes: "Melanjutkan program absensi",
-        },
-    ]
-    var table
-
-    function getData() {
-        $.ajax({
-            data: {
-                phone: dataLocal.phone,
-            },
-            url: baseUrl + "forms/get",
-            method: 'POST',
-            success: function(result) {
-                console.log(JSON.parse(result));
-                var result = JSON.parse(result);
-
-                if (result.success) {
-                    resultData = [];
-                    resultData = result.data;
-                    showDataTable()
-                }
-            }
-        });
-    }
-
-    function showDataTable() {
-        console.log(resultData)
-        // table = $("#kt_dataTable").DataTable()
-        table = $("#kt_dataTable").DataTable({
-            "searchDelay": 500,
-            "processing": true,
-            "destroy": true,
-            "order": [
-                [1, 'desc']
-            ],
-            "data": resultData,
-            "columns": [{
-                    data: 'name'
-                },
-                {
-                    data: 'date'
-                },
-                {
-                    data: 'time_start'
-                },
-                {
-                    data: 'time_end'
-                },
-                {
-                    data: 'duration'
-                },
-                {
-                    data: 'notes'
-                },
-                {
-                    data: 'code'
-                },
-            ],
-            "columnDefs": [{
-                    targets: 1,
-                    render: function(data, type, row) {
-                        return `<span>${moment(data).format('DD MMM YYYY')}</span>`
-                    }
-                },
-                {
-                    targets: 4,
-                    render: function(data, type, row) {
-                        return `<span>${data} Menit</span>`
-                    }
-                },
-                {
-                    targets: -1,
-                    orderable: false,
-                    searchable: false,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        return `
-                        <button type="button" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="btnAction">
-                            <i class="bi bi-three-dots-vertical fs-3"></i>
-                        </button>
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                            <div class="menu-item px-3">
-                                <a class="menu-link" data-row="${btoa(JSON.stringify(row))}" id="optionEdit">
-                                    <span class="fas fa-pen fs-3 menu-icon"></span>
-                                    <span class="menu-title">Ubah</span>
-                                </a>
-                            </div>
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link" data-kt-forms-table-filter="delete_row" data-code="${row.code}" >
-                                    <span class="fas fa-trash fs-3 menu-icon"></span>
-                                    <span class="menu-title">Hapus</span>
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    },
-                }
-            ],
-        })
-
-        table.on('draw', function() {
-            console.log('drawed')
-            KTMenu.createInstances();
-            handleDeleteRows()
-        });
-        KTMenu.createInstances();
-        handleDeleteRows()
-    }
-
-    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
-    var handleSearchDatatable = function() {
-        const filterSearch = document.querySelector('[data-kt-forms-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function(e) {
-            table.search(e.target.value).draw();
-        });
-    }
-
-    var handleDeleteRows = () => {
-        // Select all delete buttons
-        const deleteButtons = document.querySelectorAll('[data-kt-forms-table-filter="delete_row"]');
-
-        deleteButtons.forEach(d => {
-            // Delete button on click
-            d.addEventListener('click', function(e) {
-                var code = $(this).data('code')
-                e.preventDefault();
-
-                // Select parent row
-                const parent = e.target.closest('tr');
-
-                // Get customer name
-                const ListName = parent.querySelectorAll('td')[1].childNodes[0].textContent;
-
-                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-                Swal.fire({
-                    title: "Hapus",
-                    text: "Apakah Anda yakin? Anda tidak dapat mengembalikan data yang terhapus.",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Ya, hapus!",
-                    cancelButtonText: "Batal",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    },
-                    reverseButtons: true
-                }).then(function(result) {
-                    if (result.value) {
-                        Swal.fire({
-                            title: 'Proses!',
-                            html: "Menghapus data",
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading()
-                            },
-                        })
-
-                        // $.ajax({
-                        //     data: {
-                        //         code: code,
-                        //         phone: dataLocal.phone
-                        //     },
-                        //     url: baseUrl + "forms/delete",
-                        //     method: 'POST',
-                        //     success: function(result) {
-                        //         console.log(JSON.parse(result));
-                        //         var result = JSON.parse(result);
-
-                        //         if (result.success) {
-                        //             Swal.fire({
-                        //                 title: "Sukses",
-                        //                 html: "Anda telah menghapus <span class='text-success'>" + ListName + "</span>!",
-                        //                 icon: "success",
-                        //                 timer: 2000,
-                        //                 showCancelButton: false,
-                        //                 showConfirmButton: false
-                        //             }).then(ajax_get());
-                        //         } else {
-                        //             Swal.fire({
-                        //                 title: "Maaf",
-                        //                 text: "Sepertinya ada beberapa kesalahan yang terdeteksi. Silakan coba lagi.",
-                        //                 icon: "error",
-                        //                 buttonsStyling: !1,
-                        //                 confirmButtonText: "Ok!",
-                        //                 customClass: {
-                        //                     confirmButton: "btn btn-primary"
-                        //                 },
-                        //             });
-                        //         }
-                        //     }
-                        // });
-                    }
-                });
-            })
-        });
-    }
-
-    KTUtil.onDOMContentLoaded(function() {
-        showDataTable()
-        handleSearchDatatable()
-        handleDeleteRows()
-    })
-
-    $(document).ready(function() {
-        $(document).on("click", "#optionEdit", function(e) {
-            e.preventDefault()
-            var row = JSON.parse(atob($(this).data('row')));
-            console.log(row)
-            $("#txtDateUpdate").val(row.date)
-            $("#txtTimeStartUpdate").val(row.time_start)
-            $("#txtTimeEndUpdate").val(row.time_end)
-            $("#txtDurationUpdate").val(row.duration)
-            $("#txtNotesUpdate").val(row.notes)
-            $("#modal_update_data").modal("show")
-        })
-    })
-</script>
 
 @endsection

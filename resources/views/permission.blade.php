@@ -95,14 +95,12 @@
                                             </a>
                                         </div>
                                         <div class="menu-item px-3">
-                                            <form method="POST" action="{{ route('permission-destroy', $data->id) }}">
+                                            <form method="POST" style="margin-bottom: 0px;" action="{{ route('permission-destroy', $data->id) }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this post?')">
-                                                        <a href="#" class="menu-link" data-kt-forms-table-filter="delete_row">
+                                                    <button type="submit" class="menu-link" style="border: none; background-color: white;" onclick="return confirm('Are you sure you want to delete this post?')">
                                                             <span class="fas fa-trash fs-3 menu-icon"></span>
                                                             <span class="menu-title">Hapus</span>
-                                                        </a>
                                                     </button>
                                             </form>
                                         </div>
