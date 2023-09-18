@@ -820,7 +820,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Izin Cuti</span>
+                                    <span class="menu-title">Izin</span>
                                 </a>
                             </div>
                             <div class="menu-item">

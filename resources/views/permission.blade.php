@@ -21,7 +21,7 @@
                         <!--begin::User-->
                         <div class="col-12 col-md-6">
                             <ol class="breadcrumb text-muted fs-6 fw-bold">
-                                <li class="breadcrumb-item text-dark">Form Izin Cuti</li>
+                                <li class="breadcrumb-item text-dark">Form Izin</li>
                             </ol>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                 <th class="min-w-125px">Tanggal Permohonan</th>
                                 <th class="min-w-125px">Dari</th>
                                 <th class="min-w-70px">Sampai</th>
-                                <th class="min-w-125px">Jumlah Cuti</th>
+                                <th class="min-w-125px">Jumlah Izin</th>
                                 <th class="min-w-125px">Tipe</th>
                                 <th class="min-w-125px">Keterangan</th>
                                 <th class="min-w-70px">Aksi</th>
@@ -116,7 +116,7 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-header" id="modal_update_data_header">
-                                                <h2 class="fw-bolder">Form Ubah Cuti</h2>
+                                                <h2 class="fw-bolder">Ubah Form Izin</h2>
                                                 <div id="modal_update_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                                                     <span class="svg-icon svg-icon-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -156,7 +156,7 @@
                                                     <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" value="{{$data->date_to}}" name="date_to" autocomplete="off" />
                                                 </div>
                                                 <div class="fv-row mb-7">
-                                                    <label class="required fs-6 fw-bold mb-2">Jumlah Cuti</label>
+                                                    <label class="required fs-6 fw-bold mb-2">Jumlah Izin</label>
                                                     <input type="text" class="form-control form-control-solid" placeholder="" name="duration" value="{{$data->duration}}" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                                                 </div>
                                                 <div class="fv-row mb-7">
@@ -194,7 +194,7 @@
             <form class="form" action="{{ route('permission-insert') }}" method="POST" id="modal_add_data_form">
                 @csrf
                 <div class="modal-header" id="modal_add_data_header">
-                    <h2 class="fw-bolder">Form Tambah Cuti</h2>
+                    <h2 class="fw-bolder">Tambah Form Izin</h2>
                     <div id="modal_add_data_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -233,7 +233,7 @@
                         <input type="date" onfocus="this.showPicker()" class="form-control form-control-solid" placeholder="" name="date_to" autocomplete="off" />
                     </div>
                     <div class="fv-row mb-7">
-                        <label class="required fs-6 fw-bold mb-2">Jumlah Cuti</label>
+                        <label class="required fs-6 fw-bold mb-2">Jumlah Izin</label>
                         <input type="text" class="form-control form-control-solid" placeholder="" name="duration" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                     </div>
                     <div class="fv-row mb-7">
